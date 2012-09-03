@@ -21,6 +21,19 @@ $(window).resize(function() {
 });
 
 
+// ux fontsize sliders
+$('.fontsizer').change( function() {
+    minsize = $('#minfont').val();
+    $('#minfont').attr('data-original-title', minsize );
+    $('#minfontsize').html(minsize);
+    
+    maxsize = $('#maxfont').val();
+    $('#maxfont').attr('data-original-title', maxsize );
+    $('#maxfontsize').html(maxsize);
+    getfancy(canvasid);
+    
+});
+
 // size the canvas
 function init(elem) {
     canvasheight = $(window).height() - $('footer').height() - canvasbottom;
@@ -69,16 +82,16 @@ function getfancy(elem) {
     // console.log( newsize + ' = ' + canvaswidth + ' / ' + longest + ' x ' + factor);
 
 
-    if ( newsize > maxsize ) { newsize = maxsize; }
-    if ( newsize < minsize ) { newsize = minsize; }
+    if ( newsize >= maxsize ) { newsize = maxsize; }
+    if ( newsize <= minsize ) { newsize = minsize; }
 
     $(elem).css('fontSize',newsize  + 'px');
     
     // plz stop bratty browser
     $(elem).children().css('font-size', 'inherit');
     $(elem).children().css('line-height', 'inherit');
-    $('span').css('font-size', 'inherit');
-    $('span').css('line-height', 'inherit');
+    $(canvasid + ' span').css('font-size', 'inherit');
+    $(canvasid + ' span').css('line-height', 'inherit');
 
 }
 
