@@ -1,0 +1,89 @@
+
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+
+
+body { 
+   background:#333; 
+   padding-top:20px;
+   padding-bottom:40px;
+   }
+
+@media (min-width: 768px) {
+    .container { width: auto; margin-left:20px; margin-right:20px; }
+}
+    
+footer {
+   position:fixed;
+   bottom:0;
+   height:70px;
+}
+
+
+/* ==========================================================================
+   Get Fancy
+   ========================================================================== */
+
+.getfancy {
+    font-family:monospace;
+    height:300px;
+    overflow:auto;
+    font-size:2em;
+    line-height:1.1em;
+    background:#444;
+    color:#eee; 
+    padding:20px;
+}
+
+    /* style on active */
+[contenteditable="true"]:active,
+[contenteditable="true"]:focus{
+   border:0;
+   outline:none;
+   background:#111;
+}
+
+    /* hint at overflow */
+#mask {
+    position:relative;
+    top:-40px;
+    height:10px; 
+    background:rgba(51,51,51,0.7);
+}
+
+/* debug -- browser writes divs and spans on the fly */
+.getfancy div {
+    background:rgba(255,255,255,0.04);
+    border:2px dashed rgba(255,255,255,0.15);
+    border-width:0 2px 2px 0;
+    margin-bottom:0.5em;
+}
+.getfancy div:hover {
+    background:rgba(255,255,255,0.06);
+    border-color:rgba(255,255,255,0.25);
+}
+.getfancy div div { 
+    background:transparent;
+    border:0;
+}
+
+
+
+/* ==========================================================================
+   Menu
+   ========================================================================== */
+
+.disabled {
+    opacity:0.4; 
+    color:#000; 
+    cursor:default;  
+    }
+.disabled:hover { background:none; }
+
+
+
+
+
+
