@@ -5,7 +5,7 @@ var canvasbottom = 80;
 var canvasid = "#thecanvas";
 
 // init on browser load
-$(window).load(function () {
+$(window).load(function () {    
     canvasheight();
     getfancy(canvasid);
     $(canvasid).focus();
@@ -16,6 +16,7 @@ $(window).load(function () {
         $("[rel=popover]").popover();
 });
 
+
 // on browser resize
 $(window).resize(function() {
   canvasheight();
@@ -25,9 +26,8 @@ $(window).resize(function() {
 
 // size the canvas
 function canvasheight() {
-    // console.log ( $(window).height() + ' ' + $('footer').height() + ' ' + canvasbottom);
-    canvasheight = $(window).height() - $('footer').height() - canvasbottom;
-    $(canvasid).css('height', canvasheight);    
+    canvasH = $(window).height() - $('footer').height() - canvasbottom;
+    $(canvasid).css('height', canvasH);    
 }
 
 
@@ -79,7 +79,7 @@ function getfancy(elem) {
         }
 
     }
-    console.log('lines: ' + lines);
+    //console.log('longest: ' + lines[longestline]);
 
     // resize text
     newsize = Math.round( canvaswidth / longest * factor );
