@@ -4,8 +4,9 @@ var factor = 1.5; // default fontsize
 var canvasbottom = 80;
 var canvasid = "#thecanvas";
 
+// init on browser load
 $(window).load(function () {
-    init();
+    canvasheight();
     getfancy(canvasid);
     $(canvasid).focus();
     if ( localStorage.getItem('teacherspet') ) {    
@@ -15,59 +16,62 @@ $(window).load(function () {
         $("[rel=popover]").popover();
 });
 
+// on browser resize
 $(window).resize(function() {
-  init();
+  canvasheight();
   getfancy(canvasid);  
 });
+
+
+// size the canvas
+function canvasheight() {
+    // console.log ( $(window).height() + ' ' + $('footer').height() + ' ' + canvasbottom);
+    canvasheight = $(window).height() - $('footer').height() - canvasbottom;
+    $(canvasid).css('height', canvasheight);    
+}
 
 
 // ux fontsize sliders
 $('.fontsizer').change( function() {
     minsize = $('#minfont').val();
-    $('#minfont').attr('data-original-title', minsize );
     $('#minfontsize').html(minsize);
     
     maxsize = $('#maxfont').val();
-    $('#maxfont').attr('data-original-title', maxsize );
-    $('#maxfontsize').html(maxsize);
+    $('#maxfontsize').html(maxsize);    
+});
+$('.fontsizer').mouseup( function() {
     getfancy(canvasid);
-    
 });
 
-// size the canvas
-function init(elem) {
-    canvasheight = $(window).height() - $('footer').height() - canvasbottom;
-    $(canvasid).css('height', canvasheight);    
-}
 
-// user adjustment
+// ux fontsize buttons
 function changesize(val) {
    minsize = minsize + val;
    getfancy(canvasid);
    
 }
 
+// hide info popover
+$('#thecanvas').click( function(){
+    $('[rel=popover]').popover('hide');    
+})
+
+
+
 // dynamic text size
 function getfancy(elem) { 
+    // originally triggered passing (this) from element so you could have multiple canvas on one page. 
+
 
     var canvaswidth = $(elem).width();
     var longest = 0;
     var longestline = 0;
 
-
     // break content into lines
-        
-    text = $(elem).html();
-    text = text.replace(/<br\s*[\/]?>/gi,"\n\n");
-    text = text.replace(/<\/div><[^>]+\>/g,"\n");
-    text = text.replace(/<[^>]+\>/g,"");
-    text = text.replace(/nbsp;/g,"");
-    lines = text.split(/\r\n|\r|\n|\<[^>]+\>/);
-    // console.log(lines);
+    makelines( $(elem).html() );
 
     // find the longest line
     for (i=0; i<lines.length; i++) {
-
         lines[i] = $.trim( lines[i] );
         if ( lines[i].length > longest ) {
             longest = lines[i].length;
@@ -75,16 +79,17 @@ function getfancy(elem) {
         }
 
     }
-    console.log('longest: ' + lines[longestline]);
+    console.log('lines: ' + lines);
 
     // resize text
     newsize = Math.round( canvaswidth / longest * factor );
-    // console.log( newsize + ' = ' + canvaswidth + ' / ' + longest + ' x ' + factor);
+        // console.log( newsize + ' = ' + canvaswidth + ' / ' + longest + ' x ' + factor);
 
-
+    // max min fontsize
     if ( newsize >= maxsize ) { newsize = maxsize; }
-    if ( newsize <= minsize ) { newsize = minsize; }
+    else if ( newsize <= minsize ) { newsize = minsize; }
 
+    // set fontsize
     $(elem).css('fontSize',newsize  + 'px');
     
     // plz stop bratty browser
@@ -95,14 +100,31 @@ function getfancy(elem) {
 
 }
 
-
+function makelines(text) {
+    text = text.replace(/<br\s*[\/]?>/gi,"\n\n");
+    text = text.replace(/<\/div><[^>]+\>/g,"\n");
+    text = text.replace(/<[^>]+\>/g,"");
+    text = text.replace(/\&nbsp;/g,"");
+    lines = text.split(/\r\n|\r|\n|\<[^>]+\>/);
+    // console.log(lines);
+    return lines;    
+}
 
 function emailit() {
     text = $(canvasid).html(); 
-    text = text.replace(/<br\s*[\/]?>/gi,"%0A");
-    text = text.replace(/<\/div><[^>]+\>/g,"%0A");
-    text = text.replace(/<[^>]+\>/g,"");
-    window.open("mailto:?subject=teacher's%20pet&body=" + text);
+    console.log(text);
+    
+    text = text.replace(/(^\s*)/gi,""); // removing leading space  
+    text = text.replace(/(\&nbsp;\s)|(\&nbsp;)/g,"%3E%20");
+    text = text.replace(/<br\s*[\/]?>/gi,"%0D%0D"); // breaks
+    text = text.replace(/<\/div><[^>]+\>/gi,"%0D%0D"); // divs
+    text = text.replace(/<[^>]+\>/gi,""); // remove remain html
+    console.log('remove remaining hmtl: '+text);
+    text = text.replace(/\s+/g,"%20"); // encode reamaining spaces
+    console.log('remove spaces: '+text);
+    text = text.replace(/%3E%20%3E/g,"%3E%3E"); // stack >>
+    console.log('stack >: '+text);
+   window.open("mailto:?subject=teacher's%20pet&body=" + text);
 }
 
 function saveit() {
@@ -113,15 +135,14 @@ function marksaved() {
     $('#saveit i').addClass('icon-star');
     $('#saveit i').removeClass('icon-star-empty');
     $('.disabled').removeClass('disabled');
-    
 }
 
 function loadit() {
     $(canvasid).html( localStorage.getItem('teacherspet') );
     getfancy(canvasid);
     $(canvasid).focus();
-    
 }
+
 function deleteit() {
     var really = confirm("Delete from Storage?");
     if (really == true ) {

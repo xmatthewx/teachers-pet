@@ -8,7 +8,7 @@
 body { 
    background:#333; 
    padding-top:20px;
-   padding-bottom:40px;
+   padding-bottom:40px;   
    }
 
 @media (min-width: 768px) {
@@ -83,7 +83,13 @@ footer {
 .disabled:hover { background:none; }
 
 
-.help-inline { font-size:15px; color:#ccc; }
+.help-inline { 
+    font-size:15px; 
+    color:#ccc; 
+    padding:0 6px; 
+}
 
-
-
+input.fontsizer {
+    width:56px;
+    display:inline-block;
+}

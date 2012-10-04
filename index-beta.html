@@ -11,12 +11,7 @@
         <meta name="viewport" content="width=device-width">
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <style>
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
-        </style>
+        
         <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
         <link rel="stylesheet" href="css/main.css">
 
@@ -42,12 +37,9 @@
             </div>
             <div id="mask" ></div>
 
-
-
-
             <footer>
                 <div class="row">
-                    <div class="span4 offset0">
+                    <div class="span10" style="width:630px;" >
     
                         <div class="btn-toolbar">
                             <div class="btn-group dropup">
@@ -58,19 +50,22 @@
                                     <li id="loadit" class="disabled"  ><a href="#" onclick="loadit();" rel="tooltip" title="Load saved text" ><i class="icon-repeat"></i> Load</a></li>
                                     <li id="deleteit" class="disabled"  ><a href="#" onclick="deleteit();" rel="tooltip" title="Delete saved text" ><i class="icon-trash"></i> Delete</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#" onclick="emailit();" rel="tooltip" ><i class="icon-envelope"></i> Email</a></li>
+                                    <li><a href="#" onclick="emailit();" rel="tooltip" title="Email -- coming soon."  ><i class="icon-envelope"></i> Email</a></li>
                                     <li class="divider"></li>
                                     <li><a href="https://github.com/xmatthewx/teachers-pet" rel="tooltip" title="Contribute & fork it!" >Github</a></li>
+                                    <!--<li><a href="#" onclick="return false; emailit();" rel="tooltip" title="Email -- coming soon."  ><i class="icon-envelope"></i> Email</a></li>-->
                                 </ul>
                             </div>
 
                             <div class="btn-group" rel="tooltip" title="Adjust Smallest Font Size" >
-                                <a class="btn btn-mini btn-info" href="#" onclick="changesize(2)"><i class="icon-arrow-up icon-white"></i></a>                                
-                                <a class="btn btn-mini btn-info" href="#" onclick="changesize(-2)"><i class="icon-arrow-down icon-white"></i></a>
+                                <a href="#" class="btn btn-info btn-mini" rel="popover" title="Teacher's Pet" data-placement="top" data-content="Sharing text with a room full of people? Demonstrating code to your students on a projector? This tool will optimize your font-size on the fly. It answers the perennial question when using a projector -- can everyone see this? Yes. The answer is now yes. <br /><br />Use shift-return for intentional softwrap line-breaks. <br /><br />Version 0.1 - tested on Google Chrome.<br />"><i class="icon-info-sign icon-white"></i></a>                          
                             </div>
 
-                            <div class="btn-group dropup">
-                                <a href="#" class="btn btn-info btn-mini" rel="popover" title="Teacher's Pet" data-placement="top" data-content="Sharing text with a room full of people? Demonstrating code to your students on a projector? This tool will optimize your font-size on the fly. <br /><br />Use shift-return for intentional softwrap line-breaks. <br /><br />Version 0.1 - tested on Google Chrome.<br />"><i class="icon-info-sign icon-white"></i></a>                          
+                            <div class="btn-group" style="width:200px;" >
+                                <span id="minfontsize" class="help-inline">40</span>
+                                <input id="minfont" class="fontsizer span1" rel="tooltip" title="Min Font Size" value="40" type="range" min="20" max="99" />
+                                <input id="maxfont" class="fontsizer span1" rel="tooltip" title="Max Font Size" value="240" type="range" min="200" max="400"  />                                
+                                <span id="maxfontsize" class="help-inline">240</span>
                             </div>
                         
                         </div>
